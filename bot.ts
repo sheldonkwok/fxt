@@ -25,7 +25,7 @@ const client = new Client({
   ],
 });
 
-client.on(Events.MessageCreate, (msg) => {
+client.on(Events.MessageCreate, async (msg) => {
   const { content } = msg;
 
   const parsed = parseUrl(content);
@@ -34,7 +34,7 @@ client.on(Events.MessageCreate, (msg) => {
   const newUrl = fixTwitter(parsed);
   if (!newUrl) return;
 
-  msg.reply(newUrl);
+  await msg.reply(newUrl);
 });
 
 client.once(Events.ClientReady, (c) => console.log(`Ready! Logged in as ${c.user.tag}`));
