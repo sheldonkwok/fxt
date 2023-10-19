@@ -1,6 +1,6 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 
-import { fixMsg } from "./fixer";
+import { fixMsg } from "./fixer.ts";
 
 const { Guilds, GuildMembers, GuildMessages, MessageContent } = GatewayIntentBits;
 const client = new Client({ intents: [Guilds, GuildMembers, GuildMessages, MessageContent] });
