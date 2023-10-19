@@ -1,0 +1,17 @@
+{
+  "name": "fxt",
+  "module": "index.ts",
+  "type": "module",
+  "prettier": {
+    "printWidth": 120
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "discord.js": "^14.13.0"
+  }
+}
