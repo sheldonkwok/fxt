@@ -1,5 +1,7 @@
 # fxt 
 
+![FXT](https://raw.githubusercontent.com/sheldonkwok/fxt/main/fxr.jpeg)
+
 ## Run
 1. Create a discord application with a bot on the discord developer portal
 1. Create a link with the perms under the bot section
