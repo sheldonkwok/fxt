@@ -13,7 +13,7 @@ export function fixMsg(content: string): string[] {
     let fix = match[0].replace(/(twitter|x).com/, "fxtwitter.com");
 
     for (const [start, end] of spoilers) {
-      if (index >= start && index < end) fix = `||${fix}||`;
+      if (index > start && index < end) fix = `||${fix}||`;
     }
 
     fixes.push(fix);

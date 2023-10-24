@@ -8,6 +8,9 @@ const client = new Client({ intents: [Guilds, GuildMembers, GuildMessages, Messa
 client.on(Events.MessageCreate, async (msg) => {
   const fixedUrls = fixMsg(msg.content);
 
+  if (fixedUrls.length === 0) return;
+  await msg.suppressEmbeds(true);
+
   // Could parallelize??
   for (const fixed of fixedUrls) {
     await msg.reply(fixed);
