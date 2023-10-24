@@ -1,20 +1,22 @@
-import { Client, Events, GatewayIntentBits } from "discord.js";
+import { Client, Events, Message, GatewayIntentBits } from "discord.js";
 
 import { fixMsg } from "./fixer.ts";
 
 const { Guilds, GuildMembers, GuildMessages, MessageContent } = GatewayIntentBits;
 const client = new Client({ intents: [Guilds, GuildMembers, GuildMessages, MessageContent] });
 
-client.on(Events.MessageCreate, async (msg) => {
-  const fixedUrls = fixMsg(msg.content);
-
-  if (fixedUrls.length === 0) return;
-  await msg.suppressEmbeds(true);
-
-  // Could parallelize??
-  for (const fixed of fixedUrls) {
+// Could parallelize??
+async function fixUrls(msg: Message, urls: string[]): Promise<void> {
+  for (const fixed of urls) {
     await msg.reply(fixed);
   }
+}
+
+client.on(Events.MessageCreate, async (msg) => {
+  const fixedUrls = fixMsg(msg.content);
+  if (fixedUrls.length === 0) return;
+
+  await Promise.all([msg.suppressEmbeds(true), fixUrls(msg, fixedUrls)]);
 });
 
 client.once(Events.ClientReady, (c) => console.log(`Ready! Logged in as ${c.user.tag}`));
