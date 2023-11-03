@@ -7,3 +7,6 @@ app = "fxt"
 primary_region = "sjc"
 
 [build]
+
+[deploy]
+  strategy = "immediate"
