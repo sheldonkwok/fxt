@@ -1,12 +1,13 @@
 export function fixMsg(content: string): string[] {
-  const matches = Array.from(content.matchAll(/https:\/\/(twitter|x).com\/\w+\/status\/\d+/g));
+  const matchesTwitter = Array.from(content.matchAll(/https:\/\/(twitter|x).com\/\w+\/status\/\d+/g));
+  const matchesConsideredHarmful = Array.from(content.matchAll(/considered harmful/g));
   const fixes: string[] = [];
 
-  if (matches.length === 0) return fixes;
+  if (matchesTwitter.length === 0 && matchesConsideredHarmful === 0) return fixes;
 
   const spoilers = getSpoilers(content);
 
-  for (const match of matches) {
+  for (const match of matchesTwitter) {
     const index = match.index;
     if (index === undefined) continue;
 
@@ -17,6 +18,10 @@ export function fixMsg(content: string): string[] {
     }
 
     fixes.push(fix);
+  }
+
+  if (matchesConsideredHarmful.length !== 0) {
+    fixes.push("\"Considered harmful\" phrase considered harmful");
   }
 
   return fixes;
