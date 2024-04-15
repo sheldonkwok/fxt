@@ -17,6 +17,10 @@ client.on(Events.MessageCreate, async (msg) => {
   if (fixedUrls.length === 0) return;
 
   await Promise.all([msg.suppressEmbeds(true), fixUrls(msg, fixedUrls)]);
+
+  // Ensure embed supress
+  await Bun.sleep(5000);
+  await msg.suppressEmbeds(true);
 });
 
 client.once(Events.ClientReady, (c) => console.log(`Ready! Logged in as ${c.user.tag}`));
