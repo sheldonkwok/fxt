@@ -16,9 +16,6 @@ client.on(Events.MessageCreate, async (msg) => {
   const fixedUrls = fixMsg(msg.content);
   if (fixedUrls.length === 0) return;
 
-  // This doesn't really handle half broken embed messages
-  if (msg.embeds.length > 0) return;
-
   await Promise.all([msg.suppressEmbeds(true), fixUrls(msg, fixedUrls)]);
 
   // Ensure embed supress
