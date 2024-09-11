@@ -1,10 +1,24 @@
-FROM oven/bun:latest
+FROM rust:latest
 
-WORKDIR /opt/app
+WORKDIR /usr/src/app
 
-COPY package.json bun.lockb ./
-RUN bun install
+# Copy the Cargo.toml and Cargo.lock files
+COPY Cargo.toml Cargo.lock ./
 
-COPY tsconfig.json *.ts ./
+# Create a dummy main.rs to build dependencies
+RUN mkdir src && echo "fn main() {}" > src/main.rs
 
-CMD ["bun", "bot.ts"]
+# Build dependencies
+RUN cargo build --release
+
+# Remove the dummy source file
+RUN rm src/main.rs
+
+# Copy the actual source code
+COPY src ./src
+
+# Build the application
+RUN cargo build --release
+
+# Run the binary
+CMD ["./target/release/your_bot_name"]
