@@ -98,7 +98,7 @@ const DEFAULT_TWITTER_FIX = "fxtwitter.com";
 const SECRET_FIXERS = (process.env.SECRET_FIXERS || "").split(",").filter(s => s.length > 0);
 
 const DEFAULT_TIKTOK_FIX = "tnktok.com";
-const DEFAULT_INSTAGRAM_FIX = "ddinstagram.com";
+const DEFAULT_INSTAGRAM_FIX = "kkinstagram.com";
 
 function getTwitterFixer(): string {
   if (SECRET_FIXERS.length === 0) return DEFAULT_TWITTER_FIX;
