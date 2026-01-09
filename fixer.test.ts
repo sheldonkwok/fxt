@@ -102,11 +102,11 @@ test("fix both twitter and tiktok urls", () => {
 
 // Instagram tests
 const INSTAGRAM_TEST_URL = "https://www.instagram.com/p/ABC123/";
-const INSTAGRAM_FIXED_URL = "https://www.ddinstagram.com/p/ABC123/";
+const INSTAGRAM_FIXED_URL = "https://www.kkinstagram.com/p/ABC123/";
 const INSTAGRAM_FIXED_SPOILER = `||${INSTAGRAM_FIXED_URL}||`;
 
 const INSTAGRAM_REEL_URL = "https://www.instagram.com/reel/XYZ789/";
-const INSTAGRAM_REEL_FIXED = "https://www.ddinstagram.com/reel/XYZ789/";
+const INSTAGRAM_REEL_FIXED = "https://www.kkinstagram.com/reel/XYZ789/";
 
 test("fix instagram url", () => {
   const fixed = fixMsg(INSTAGRAM_TEST_URL);
