@@ -99,3 +99,45 @@ test("fix both twitter and tiktok urls", () => {
   const fixed = fixMsg(content);
   expect(fixed).toEqual([FIXED_URL, TIKTOK_FIXED_URL]);
 });
+
+// Instagram tests
+const INSTAGRAM_TEST_URL = "https://www.instagram.com/p/ABC123/";
+const INSTAGRAM_FIXED_URL = "https://www.ddinstagram.com/p/ABC123/";
+const INSTAGRAM_FIXED_SPOILER = `||${INSTAGRAM_FIXED_URL}||`;
+
+const INSTAGRAM_REEL_URL = "https://www.instagram.com/reel/XYZ789/";
+const INSTAGRAM_REEL_FIXED = "https://www.ddinstagram.com/reel/XYZ789/";
+
+test("fix instagram url", () => {
+  const fixed = fixMsg(INSTAGRAM_TEST_URL);
+  expect(fixed).toEqual([INSTAGRAM_FIXED_URL]);
+});
+
+test("fix instagram reel url", () => {
+  const fixed = fixMsg(INSTAGRAM_REEL_URL);
+  expect(fixed).toEqual([INSTAGRAM_REEL_FIXED]);
+});
+
+test("fix instagram url in text", () => {
+  const content = `check this out ${INSTAGRAM_TEST_URL} cool post`;
+  const fixed = fixMsg(content);
+  expect(fixed).toEqual([INSTAGRAM_FIXED_URL]);
+});
+
+test("fix multiple instagram urls", () => {
+  const content = `${INSTAGRAM_TEST_URL} and ${INSTAGRAM_REEL_URL}`;
+  const fixed = fixMsg(content);
+  expect(fixed).toEqual([INSTAGRAM_FIXED_URL, INSTAGRAM_REEL_FIXED]);
+});
+
+test("handle instagram spoilers", () => {
+  const content = `secret post ||${INSTAGRAM_TEST_URL}||`;
+  const fixed = fixMsg(content);
+  expect(fixed).toEqual([INSTAGRAM_FIXED_SPOILER]);
+});
+
+test("fix twitter, tiktok, and instagram urls", () => {
+  const content = `${TEST_URL} and ${TIKTOK_TEST_URL} and ${INSTAGRAM_TEST_URL}`;
+  const fixed = fixMsg(content);
+  expect(fixed).toEqual([FIXED_URL, TIKTOK_FIXED_URL, INSTAGRAM_FIXED_URL]);
+});
