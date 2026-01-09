@@ -1,38 +1,9 @@
 export function fixMsg(content: string): string[] {
-  const fixes: string[] = [];
   const spoilers = getSpoilers(content);
+  const twitterFixes = fixTwitterUrls(content, spoilers);
+  const tiktokFixes = fixTikTokUrls(content, spoilers);
 
-  // Fix Twitter/X URLs
-  const twitterMatches = Array.from(content.matchAll(/https:\/\/(twitter|x)\.com\/\w+\/status\/\d+/g));
-  for (const match of twitterMatches) {
-    const index = match.index;
-    if (index === undefined) continue;
-
-    let fix = match[0].replace(/(twitter|x)\.com/, getTwitterFixer());
-
-    for (const [start, end] of spoilers) {
-      if (index > start && index < end) fix = `||${fix}||`;
-    }
-
-    fixes.push(fix);
-  }
-
-  // Fix TikTok URLs
-  const tiktokMatches = Array.from(content.matchAll(/https:\/\/(?:www\.|vm\.|vt\.)?tiktok\.com\/[^\s|]*/g));
-  for (const match of tiktokMatches) {
-    const index = match.index;
-    if (index === undefined) continue;
-
-    let fix = match[0].replace(/tiktok\.com/, getTikTokFixer());
-
-    for (const [start, end] of spoilers) {
-      if (index > start && index < end) fix = `||${fix}||`;
-    }
-
-    fixes.push(fix);
-  }
-
-  return fixes;
+  return [...twitterFixes, ...tiktokFixes];
 }
 
 const SPOILER = "||";
@@ -60,6 +31,46 @@ function getSpoilers(content: string): number[][] {
   }
 
   return pairs;
+}
+
+function fixTwitterUrls(content: string, spoilers: number[][]): string[] {
+  const fixes: string[] = [];
+  const twitterMatches = Array.from(content.matchAll(/https:\/\/(twitter|x)\.com\/\w+\/status\/\d+/g));
+
+  for (const match of twitterMatches) {
+    const index = match.index;
+    if (index === undefined) continue;
+
+    let fix = match[0].replace(/(twitter|x)\.com/, getTwitterFixer());
+
+    for (const [start, end] of spoilers) {
+      if (index > start && index < end) fix = `||${fix}||`;
+    }
+
+    fixes.push(fix);
+  }
+
+  return fixes;
+}
+
+function fixTikTokUrls(content: string, spoilers: number[][]): string[] {
+  const fixes: string[] = [];
+  const tiktokMatches = Array.from(content.matchAll(/https:\/\/(?:www\.|vm\.|vt\.)?tiktok\.com\/[^\s|]*/g));
+
+  for (const match of tiktokMatches) {
+    const index = match.index;
+    if (index === undefined) continue;
+
+    let fix = match[0].replace(/tiktok\.com/, getTikTokFixer());
+
+    for (const [start, end] of spoilers) {
+      if (index > start && index < end) fix = `||${fix}||`;
+    }
+
+    fixes.push(fix);
+  }
+
+  return fixes;
 }
 
 const DEFAULT_TWITTER_FIX = "fxtwitter.com";
