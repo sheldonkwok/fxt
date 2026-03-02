@@ -1,0 +1,8 @@
+{
+  "name": "bot",
+  "module": "bot.ts",
+  "type": "module",
+  "dependencies": {
+    "discord.js": "^14.13.0"
+  }
+}
