@@ -8,7 +8,7 @@ This file contains reminders and best practices for working on this codebase.
 
 Proper workflow:
 1. Make code changes
-2. **Run `bun test` to verify nothing broke**
+2. **Run `cargo test` to verify nothing broke**
 3. Review test results
 4. Only commit if all tests pass
 5. Push to remote
@@ -21,8 +21,8 @@ This applies to:
 
 ## Test Commands
 
-- Run all tests: `bun test`
-- Test file location: `fixer.test.ts`
+- Run all tests: `cargo test`
+- Tests are in: `src/fixer.rs` (`#[cfg(test)]` module)
 
 ## Development Practices
 

@@ -1,11 +1,14 @@
-FROM oven/bun:latest
+FROM rust:slim AS builder
 
 WORKDIR /opt/app
 
-COPY package.json bun.lockb ./
-RUN bun install
+COPY Cargo.toml Cargo.lock ./
+COPY src/ ./src/
 
-COPY tsconfig.json ./
-COPY bot.ts fixer.ts ./
+RUN cargo build --release
 
-CMD ["bun", "bot.ts"]
+FROM debian:bookworm-slim
+
+COPY --from=builder /opt/app/target/release/fxt /usr/local/bin/fxt
+
+CMD ["fxt"]
