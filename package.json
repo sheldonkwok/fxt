@@ -1,9 +1,12 @@
 {
   "name": "fxt",
+  "module": "bot.ts",
   "type": "module",
-  "workspaces": ["packages/*"],
   "prettier": {
     "printWidth": 120
+  },
+  "dependencies": {
+    "discord.js": "^14.13.0"
   },
   "devDependencies": {
     "bun-types": "latest"

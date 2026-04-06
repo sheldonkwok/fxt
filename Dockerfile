@@ -3,10 +3,9 @@ FROM oven/bun:latest
 WORKDIR /opt/app
 
 COPY package.json bun.lockb ./
-COPY packages/bot/package.json ./packages/bot/
 RUN bun install
 
 COPY tsconfig.json ./
-COPY packages/bot/ ./packages/bot/
+COPY bot.ts fixer.ts ./
 
-CMD ["bun", "packages/bot/bot.ts"]
+CMD ["bun", "bot.ts"]
